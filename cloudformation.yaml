@@ -1,0 +1,80 @@
+AWSTemplateFormatVersion: '2010-09-09'
+
+
+Description: An Example of How to Use Lambda Layers, Here with OpenCV.
+
+
+Parameters:
+
+  LambdaLayerArn:
+    Type: String
+
+
+Resources:
+
+  LogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName:
+        Fn::Sub: ${AWS::StackName}-LogGroup
+      RetentionInDays: 14
+
+  InputImageBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub ${AWS::StackName}-input-image-bucket
+      NotificationConfiguration:
+        LambdaConfigurations:
+          - Event: 's3:ObjectCreated:*'
+            Function: !GetAtt ImageProcessingLambda.Arn
+
+  InputImageBucketInvokeImageProcessingLambdaPermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: lambda:InvokeFunction
+      FunctionName: !Ref ImageProcessingLambda
+      Principal: s3.amazonaws.com
+      SourceArn: !Sub arn:aws:s3:::${AWS::StackName}-input-image-bucket
+
+  ImageProcessingLambdaRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Sub ${AWS::StackName}-lambda-role
+      Description:  !Sub IAM Role for ${AWS::StackName}-lambda-function
+      AssumeRolePolicyDocument:
+        Statement:
+          - Action:
+            - sts:AssumeRole
+            Effect: Allow
+            Principal:
+              Service:
+              - lambda.amazonaws.com
+        Version: 2012-10-17
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AmazonS3FullAccess
+
+  ImageProcessingLambda:
+    Type: AWS::Lambda::Function
+    Properties:
+      Environment:
+        Variables:
+          INPUT_IMAGE_BUCKET: !Sub ${AWS::StackName}-input-image-bucket
+          OUTPUT_IMAGE_BUCKET: !Sub ${AWS::StackName}-output-image-bucket
+      Layers:
+        - !Ref LambdaLayerArn
+      Handler: image_processing_lambda.handler
+      MemorySize: 3008
+      Role: !GetAtt ImageProcessingLambdaRole.Arn
+      Runtime: python3.7
+      Timeout: 300
+      FunctionName: !Sub ${AWS::StackName}-lambda-function
+      Code:
+        ZipFile: |
+          import json
+          def handler(event, context):
+              print("Event: %s" % json.dumps(event))
+
+  OutputImageBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub ${AWS::StackName}-output-image-bucket
