@@ -74,7 +74,13 @@ Publishing opencv-python37 lambda layer.
 }
 ```
 
-3. Deploy the CloudFormation stack.
+Take note of the lambda layer version number.
+
+3. **Update LAMBDA_LAYER_ARN in driver.sh to have the layer version number matching the one you want to use.**
+
+This should be parameterized in the future.
+
+4. Deploy the CloudFormation stack.
 ```
 bash driver.sh deploy-stack
 ```
@@ -88,7 +94,7 @@ Waiting for stack create/update to complete
 Successfully created/updated stack - test-opencv-python37
 ```
 
-4. Update the lambda function.
+5. Update the lambda function.
 ```
 bash driver.sh update-lambda
 ```
@@ -107,9 +113,9 @@ Updating lambda function.
 }
 ```
 
-5. Find [images/input/my_image.jpg](images/input/my_image.jpg), and put it in the test-opencv-python37-input-image-bucket S3 bucket.
+6. Find [images/input/my_image.jpg](images/input/my_image.jpg), and put it in the test-opencv-python37-input-image-bucket S3 bucket.
 
-6. Go to the test-opencv-python37-output-image-bucket S3 bucket, and find a grayscale image that should look like [images/output/my_image_gray.jpg](images/output/my_image_gray.jpg).
+7. Go to the test-opencv-python37-output-image-bucket S3 bucket, and find a grayscale image that should look like [images/output/my_image_gray.jpg](images/output/my_image_gray.jpg).
 
 ## Next Steps
 
