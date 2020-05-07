@@ -10,14 +10,6 @@ if [[ $COMMAND != "create-layer" ]] && [[ $COMMAND != "publish-layer" ]] && [[ $
   exit 1
 fi
 
-# NAME=${2:-}
-# if [[ -z "$NAME" ]]; then
-#   echo
-#   echo "NAME is empty!"
-#   echo "Exiting."
-#   exit 1
-# fi
-
 case $COMMAND in
 
   create-layer)
@@ -45,6 +37,8 @@ case $COMMAND in
   deploy-stack)
   echo
 
+# Watch the layer version!
+# This, along with other things, should be parameterized.
   LAMBDA_LAYER_ARN=arn:aws:lambda:$AWS_DEFAULT_REGION:$AWS_ACCOUNT_ID:layer:opencv-python37:4
 
   echo "Deploying the test-opencv-python37 CloudFormation Stack."

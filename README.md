@@ -23,10 +23,10 @@ See the uses of `${AWS::StackName}` throughout cloudformation.yaml.
 
 - [Python](https://www.python.org/)
 - Environment Variables
- - AWS_ACCESS_KEY_ID
- - AWS_SECRET_ACCESS_KEY
- - AWS_DEFAULT_REGION
- - AWS_ACCOUNT_ID
+  - AWS_ACCESS_KEY_ID
+  - AWS_SECRET_ACCESS_KEY
+  - AWS_DEFAULT_REGION
+  - AWS_ACCOUNT_ID
 
 ## Usage
 
@@ -109,7 +109,11 @@ Updating lambda function.
 
 5. Find [images/input/my_image.jpg](images/input/my_image.jpg), and put it in the test-opencv-python37-input-image-bucket S3 bucket.
 
-6. Go to the test-opencv-python37-output-image-bucket S3 bucket, and find a grayscale image that should look like [images/output/my_image_gray.jpg](images/input/my_image_gray.jpg).
+6. Go to the test-opencv-python37-output-image-bucket S3 bucket, and find a grayscale image that should look like [images/output/my_image_gray.jpg](images/output/my_image_gray.jpg).
+
+## Next Steps
+
+I'm going to make the driver.sh parameters named [like so](https://brianchildress.co/named-parameters-in-bash/).
 
 ## Miscellanea
 
@@ -122,5 +126,3 @@ Delete layer versions.
 ```
 aws lambda delete-layer-version --layer-name opencv-python37 --version-number 3
 ```
-
-I'm going to make the driver.sh parameters named [like so](https://brianchildress.co/named-parameters-in-bash/).
