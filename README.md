@@ -7,7 +7,7 @@ Let's cram OpenCV into a lambda using layers!
 
 A useful feature of theirs is the [layer](https://docs.aws.amazon.com/lambda/latest/dg/configuration-layers.html), which allows one to cram a bunch of stuff into them.
 
-Here we use a layer to put OpenCV into a lambda and do serverless image processing.
+Here we use a layer to put [OpenCV](https://github.com/skvark/opencv-python) into a lambda and do serverless image processing.
 
 The image processing done here is very simple:  converting from color to grayscale.  
 
