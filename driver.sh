@@ -39,7 +39,7 @@ case $COMMAND in
 
 # Watch the layer version!
 # This, along with other things, should be parameterized.
-  LAMBDA_LAYER_ARN=arn:aws:lambda:$AWS_DEFAULT_REGION:$AWS_ACCOUNT_ID:layer:opencv-python37:4
+  LAMBDA_LAYER_ARN=arn:aws:lambda:$AWS_DEFAULT_REGION:$AWS_ACCOUNT_ID:layer:opencv-python37:1
 
   echo "Deploying the test-opencv-python37 CloudFormation Stack."
   aws cloudformation deploy --template-file cloudformation.yaml --stack-name test-opencv-python37 \

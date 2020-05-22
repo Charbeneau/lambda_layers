@@ -32,7 +32,7 @@ See the uses of `${AWS::StackName}` throughout cloudformation.yaml.
 
 0. Create a Python virtual environment, here called **deployment_env** and done with [virtualenvwrapper](https://virtualenvwrapper.readthedocs.io/en/latest/).
 ```
-mkvirtualenv deployment_env --no-site-packages
+mkvirtualenv deployment_env
 workon deployment_env
 pip install -r deployment_env_requirements.txt
 ```
@@ -117,9 +117,13 @@ Updating lambda function.
 
 7. Go to the test-opencv-python37-output-image-bucket S3 bucket, and find a grayscale image that should look like [images/output/my_image_gray.jpg](images/output/my_image_gray.jpg).
 
-## Next Steps
+## Potential Improvements
 
-I'm going to make the driver.sh parameters named [like so](https://brianchildress.co/named-parameters-in-bash/).
+Making the driver.sh parameters named [like so](https://brianchildress.co/named-parameters-in-bash/) seems like a good idea.
+
+The S3 buckets are public, so watch out.  This should be changed.
+
+The [Dockerfile](./layers/opencv-python37/Dockerfile) uses the amazonlinux image, not lambci/lambda-base.  The implications of this are unclear to me, so be careful.
 
 ## Miscellanea
 
